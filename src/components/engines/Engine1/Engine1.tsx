@@ -15,13 +15,16 @@ export function Engine1() {
   const [text, setText] = useState('');
   const [selectedVoice, setSelectedVoice] = useState<TTSVoice>('nova');
   const [speed, setSpeed] = useState(1.0);
+  const [showEmptyTextWarning, setShowEmptyTextWarning] = useState(false);
 
   const handleGenerate = async () => {
     if (!text.trim()) {
-      alert('Please enter some text to convert to speech');
+      setShowEmptyTextWarning(true);
+      setTimeout(() => setShowEmptyTextWarning(false), 3000);
       return;
     }
 
+    setShowEmptyTextWarning(false);
     await generateAudio(text, selectedVoice, speed);
   };
 
@@ -125,6 +128,14 @@ export function Engine1() {
                 {text.length} characters
               </p>
             </div>
+
+            {showEmptyTextWarning && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <p className="text-yellow-800">
+                  <strong>⚠️ Warning:</strong> Please enter some text to convert to speech.
+                </p>
+              </div>
+            )}
 
             <Button
               onClick={handleGenerate}

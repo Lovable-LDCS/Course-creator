@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { openAIService } from '../services/ai/openai.service';
 
@@ -22,21 +22,7 @@ export function AIProvider({ children }: AIProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Check if API key is configured on mount
-    const configured = openAIService.isConfigured();
-    setIsConfigured(configured);
-    
-    if (configured) {
-      // Test connection if configured
-      testConnection();
-    } else {
-      setIsLoading(false);
-      setError('OpenAI API key is not configured. Please add VITE_OPENAI_API_KEY to your .env file.');
-    }
-  }, []);
-
-  const testConnection = async () => {
+  const testConnection = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     
@@ -53,7 +39,21 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Check if API key is configured on mount
+    const configured = openAIService.isConfigured();
+    setIsConfigured(configured);
+    
+    if (configured) {
+      // Test connection if configured
+      testConnection();
+    } else {
+      setIsLoading(false);
+      setError('OpenAI API key is not configured. Please add VITE_OPENAI_API_KEY to your .env file.');
+    }
+  }, [testConnection]);
 
   const value: AIContextValue = {
     isConfigured,

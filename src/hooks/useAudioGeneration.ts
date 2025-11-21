@@ -18,6 +18,9 @@ export function useAudioGeneration() {
   });
 
   const generateAudio = async (text: string, voice: TTSVoice, speed: number = 1.0) => {
+    // Validate speed parameter
+    const validatedSpeed = Math.min(Math.max(speed, 0.5), 2.0);
+    
     // Clear previous audio
     if (state.audioUrl) {
       URL.revokeObjectURL(state.audioUrl);
@@ -31,7 +34,7 @@ export function useAudioGeneration() {
     });
 
     try {
-      const blob = await synthesizeSpeech({ text, voice, speed });
+      const blob = await synthesizeSpeech({ text, voice, speed: validatedSpeed });
       const url = createAudioURL(blob);
 
       setState({
@@ -52,7 +55,11 @@ export function useAudioGeneration() {
 
   const download = (filename: string = 'audio.mp3') => {
     if (state.audioBlob) {
-      downloadAudio(state.audioBlob, filename);
+      // Sanitize filename and ensure .mp3 extension
+      const sanitized = filename
+        .replace(/[^a-z0-9_\-.]/gi, '_')
+        .replace(/\.mp3$/i, '') + '.mp3';
+      downloadAudio(state.audioBlob, sanitized);
     }
   };
 
