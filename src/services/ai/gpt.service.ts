@@ -61,7 +61,7 @@ Return only valid JSON, no additional text.`,
       keyPoints: parsed.keyPoints || [],
       topics: parsed.topics || [],
     };
-  } catch (error) {
+  } catch {
     // Fallback if JSON parsing fails
     return {
       summary: response.content,
@@ -132,7 +132,7 @@ Return only valid JSON array, no additional text.`,
   
   try {
     return JSON.parse(response.content);
-  } catch (error) {
+  } catch {
     // Fallback to basic structure
     return [
       {

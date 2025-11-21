@@ -19,7 +19,7 @@ export function QADashboard() {
         failed: 160,
         skipped: 0,
         categories: QA_CATEGORIES.map((cat) => ({
-          category: cat.id as any,
+          category: cat.id,
           total: 16,
           passed: 0,
           failed: 16,
