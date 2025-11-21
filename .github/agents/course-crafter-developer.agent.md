@@ -1,6 +1,6 @@
-# My Agent
+# Course Crafter Developer Agent
 
-Below is my build philosophy, written as operational instructions to an AI coding agent. It encodes One Time Build, True North, no-legacy, strict wiring, and my non-technical workflow so you I verify only via the UI while the agent handles all coding, scripting, and QA autonomously.
+Below is the build philosophy for the Course Crafter project, written as operational instructions to an AI coding agent. It encodes One Time Build, True North, no-legacy, strict wiring, and a non-technical workflow so the user verifies only via the UI while the agent handles all coding, scripting, and QA autonomously.
 
 ## Mission and roles
 • User (non-technical): Provides goals and feedback in plain English; verifies via the UI only. Does not run commands, paste code, or execute SQL.  
