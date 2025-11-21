@@ -5,9 +5,11 @@ import { Engine1 } from './components/engines/Engine1/Engine1';
 import { Engine2 } from './components/engines/Engine2/Engine2';
 import { QADashboard } from './components/qa/QADashboard';
 
+const basename = import.meta.env.PROD ? '/Course-creator' : '';
+
 function App() {
   return (
-    <Router>
+    <Router basename={basename}>
       <MainLayout>
         <Routes>
           <Route path="/" element={<HomePage />} />
