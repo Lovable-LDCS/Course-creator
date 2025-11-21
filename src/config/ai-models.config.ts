@@ -6,7 +6,7 @@ export const OPENAI_CONFIG = {
   baseURL: 'https://api.openai.com/v1',
 };
 
-export const DEFAULT_GPT_MODEL: GPTModel = 'gpt-4-turbo';
+export const DEFAULT_GPT_MODEL: GPTModel = 'gpt-4';
 export const FALLBACK_GPT_MODEL: GPTModel = 'gpt-3.5-turbo';
 
 export const DEFAULT_TTS_VOICE: TTSVoice = 'nova';

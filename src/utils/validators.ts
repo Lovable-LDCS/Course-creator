@@ -41,5 +41,5 @@ export function formatFileSize(bytes: number): string {
  * Generate unique file ID
  */
 export function generateFileId(): string {
-  return `file_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  return `file_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
 }
