@@ -21,7 +21,7 @@ export function Card({
   return (
     <div
       className={cn(
-        'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden',
+        'bg-white rounded-xl shadow-md border-l-4 border-secondary overflow-hidden hover:shadow-lg transition-shadow',
         className
       )}
       role="region"
@@ -32,14 +32,14 @@ export function Card({
           <div className="flex-1">
             <div className="flex items-center gap-3">
               {number && (
-                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 text-primary-700 font-semibold text-sm">
+                <span className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-secondary to-tertiary text-white font-bold text-sm shadow-md">
                   {number}
                 </span>
               )}
-              <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+              <h3 className="text-lg font-bold text-primary">{title}</h3>
             </div>
             {subtitle && (
-              <p className="text-sm text-gray-600 mt-1 ml-11">{subtitle}</p>
+              <p className="text-sm text-gray-600 mt-2 ml-12">{subtitle}</p>
             )}
           </div>
         </div>

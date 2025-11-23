@@ -1,91 +1,95 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ENGINES } from '../config/app.config';
 import { VoiceoverEngineModal } from './engines/voiceover/VoiceoverEngineModal';
 
 export function HomePage() {
-  const [isVoiceoverModalOpen, setIsVoiceoverModalOpen] = useState(false);
+  const [activeEngineModal, setActiveEngineModal] = useState<string | null>(null);
 
   const handleEngineClick = (engineId: string) => {
-    if (engineId === 'engine1') {
-      setIsVoiceoverModalOpen(true);
-    }
+    setActiveEngineModal(engineId);
   };
 
   return (
-    <div className="flex-1 p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="text-6xl mb-4">🎓</div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+    <div className="flex-1 bg-gradient-to-br from-fill to-white">
+      <div className="max-w-6xl mx-auto px-8 py-16">
+        <div className="text-center mb-16">
+          <div className="text-7xl mb-6">🎬</div>
+          <h1 className="text-5xl font-bold text-primary mb-4">
             Welcome to Video Factory
           </h1>
-          <p className="text-xl text-gray-600">
-            Transform your educational content into professional training materials with AI
+          <p className="text-xl text-secondary max-w-2xl mx-auto">
+            Transform your educational content into professional training materials with AI-powered video creation
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
           {ENGINES.filter((e) => e.enabled).map((engine) => (
-            engine.id === 'engine1' ? (
-              <button
-                key={engine.id}
-                onClick={() => handleEngineClick(engine.id)}
-                className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-transparent hover:border-primary-500 text-left w-full"
-              >
-                <div className="text-5xl mb-4">{engine.icon}</div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">{engine.name}</h2>
-                <p className="text-gray-600">{engine.description}</p>
-                <div className="mt-4 text-primary-600 font-medium">
-                  Get Started →
-                </div>
-              </button>
-            ) : (
-              <Link
-                key={engine.id}
-                to={`/${engine.id}`}
-                className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-transparent hover:border-primary-500"
-              >
-                <div className="text-5xl mb-4">{engine.icon}</div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">{engine.name}</h2>
-                <p className="text-gray-600">{engine.description}</p>
-                <div className="mt-4 text-primary-600 font-medium">
-                  Get Started →
-                </div>
-              </Link>
-            )
+            <button
+              key={engine.id}
+              onClick={() => handleEngineClick(engine.id)}
+              className="bg-white rounded-xl shadow-xl p-10 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-secondary text-left w-full transform hover:-translate-y-1"
+            >
+              <div className="text-6xl mb-4">{engine.icon}</div>
+              <h2 className="text-2xl font-bold text-primary mb-3">{engine.name}</h2>
+              <p className="text-gray-600 mb-4">{engine.description}</p>
+              <div className="mt-6 inline-flex items-center text-secondary font-semibold text-lg">
+                Get Started →
+              </div>
+            </button>
           ))}
         </div>
 
         <VoiceoverEngineModal
-          isOpen={isVoiceoverModalOpen}
-          onClose={() => setIsVoiceoverModalOpen(false)}
+          isOpen={activeEngineModal === 'engine1'}
+          onClose={() => setActiveEngineModal(null)}
         />
 
-        <div className="bg-blue-50 rounded-lg p-8 border border-blue-200">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Features</h2>
-          <ul className="space-y-3">
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span className="text-gray-700">AI-powered content generation with GPT-4</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span className="text-gray-700">Professional voice-over synthesis</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span className="text-gray-700">Automatic video creation from documents</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span className="text-gray-700">Cost-optimized AI model selection</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2">✓</span>
-              <span className="text-gray-700">Comprehensive quality assurance testing</span>
-            </li>
-          </ul>
+        <div className="bg-white rounded-xl shadow-lg p-10 border-l-4 border-secondary">
+          <h2 className="text-3xl font-bold text-primary mb-6">Platform Features</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl text-success flex-shrink-0">✓</span>
+              <div>
+                <h3 className="font-semibold text-primary mb-1">AI-Powered Content Generation</h3>
+                <p className="text-gray-600">Advanced GPT-4 integration for intelligent script creation</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl text-success flex-shrink-0">✓</span>
+              <div>
+                <h3 className="font-semibold text-primary mb-1">Professional Voice Synthesis</h3>
+                <p className="text-gray-600">Natural-sounding text-to-speech with multiple voice options</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl text-success flex-shrink-0">✓</span>
+              <div>
+                <h3 className="font-semibold text-primary mb-1">Automated Video Creation</h3>
+                <p className="text-gray-600">Convert presentations to engaging video content automatically</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl text-success flex-shrink-0">✓</span>
+              <div>
+                <h3 className="font-semibold text-primary mb-1">Industry-Specific Customization</h3>
+                <p className="text-gray-600">Tailored content for 24+ industries and skill levels</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl text-success flex-shrink-0">✓</span>
+              <div>
+                <h3 className="font-semibold text-primary mb-1">Context-Aware AI</h3>
+                <p className="text-gray-600">Upload documents to provide rich context for better results</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl text-success flex-shrink-0">✓</span>
+              <div>
+                <h3 className="font-semibold text-primary mb-1">Quality Assurance</h3>
+                <p className="text-gray-600">Comprehensive testing and validation for production-ready output</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

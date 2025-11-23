@@ -38,7 +38,7 @@ export function Modal({
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        className="fixed inset-0 bg-primary/80 backdrop-blur-sm transition-opacity"
         aria-hidden="true"
         onClick={onClose}
       />
@@ -47,27 +47,27 @@ export function Modal({
       <div className="flex min-h-screen items-center justify-center p-4">
         <div
           className={cn(
-            'relative w-full bg-white rounded-lg shadow-xl transform transition-all',
+            'relative w-full bg-white rounded-xl shadow-2xl transform transition-all',
             sizeClasses[size],
             size === 'full' && 'h-[95vh]',
             className
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between p-6 bg-gradient-to-r from-primary to-secondary border-b border-primary-700">
             <h2
               id="modal-title"
-              className="text-xl font-semibold text-gray-900"
+              className="text-xl font-bold text-white"
             >
               {title}
             </h2>
             <button
               type="button"
-              className="rounded-lg p-2 hover:bg-gray-100 transition-colors"
+              className="rounded-lg p-2 hover:bg-white/20 transition-colors"
               onClick={onClose}
               aria-label="Close modal"
             >
-              <X className="w-5 h-5 text-gray-500" />
+              <X className="w-5 h-5 text-white" />
             </button>
           </div>
 
