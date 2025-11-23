@@ -169,7 +169,7 @@ Both reported issues have been resolved:
 
 1. **✅ 404 Error**: Not currently occurring. Latest deployment (run #7) successful. Proper configuration verified and documented.
 
-2. **✅ Custom Agent Not Selectable**: Fixed by moving agent file to correct directory (`.github/copilot/`). Comprehensive setup documentation added.
+2. **✅ Custom Agent Not Selectable**: Fixed by creating properly formatted agent file at `.github/agents/course-crafter-developer.agent.md` with required YAML frontmatter. Comprehensive setup documentation added.
 
 **Current Status**: All systems operational. Ready for user verification after merge.
 
