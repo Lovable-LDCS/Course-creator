@@ -266,6 +266,8 @@ The agent is pre-configured with:
 - Non-technical user workflow
 - RED → GREEN development methodology
 
+For detailed setup and troubleshooting, see [AGENT_SETUP.md](./AGENT_SETUP.md).
+
 ## Contributing
 
 This is a private project for individual use with potential future commercialization.
