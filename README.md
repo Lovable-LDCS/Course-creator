@@ -251,6 +251,21 @@ Video Factory follows a strict one-time build methodology:
 
 See [ONE_TIME_BUILD_RULES.md](./ONE_TIME_BUILD_RULES.md) for complete workflow.
 
+### GitHub Copilot Custom Agent
+
+The repository includes a custom GitHub Copilot agent configured for this project:
+
+- **Location**: `.github/copilot/course-crafter-developer.md`
+- **Purpose**: Provides project-specific context and development rules to GitHub Copilot
+- **Usage**: When creating issues or using chat, select the "Course Crafter Developer" agent for context-aware assistance
+
+The agent is pre-configured with:
+- One-time build philosophy
+- True North architecture-first approach
+- Strict wiring and QA requirements
+- Non-technical user workflow
+- RED → GREEN development methodology
+
 ## Contributing
 
 This is a private project for individual use with potential future commercialization.
