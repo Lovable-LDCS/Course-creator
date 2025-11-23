@@ -35,12 +35,13 @@
 
 **Issue**: Custom GitHub Copilot agent was not appearing in the agent selector.
 
-**Root Cause**: Agent file was in `.github/agents/` directory, but GitHub Copilot expects agents in `.github/copilot/`.
+**Root Cause**: Agent file was in `.github/copilot/` directory without proper YAML frontmatter, but GitHub Copilot expects agents in `.github/agents/` with `.agent.md` extension and YAML metadata.
 
 **Solution Implemented**:
-1. Moved agent file from `.github/agents/course-crafter-developer.agent.md` to `.github/copilot/course-crafter-developer.md`
-2. Updated all documentation references
-3. Added comprehensive setup guide in AGENT_SETUP.md
+1. Created properly formatted agent file at `.github/agents/course-crafter-developer.agent.md` with YAML frontmatter
+2. Added required metadata: name, description, and tools
+3. Updated all documentation references
+4. Enhanced setup guide in AGENT_SETUP.md with frontmatter documentation
 
 **Verification**: After merge, agent should appear in GitHub Copilot UI when:
 - Creating new issues

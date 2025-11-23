@@ -255,7 +255,7 @@ See [ONE_TIME_BUILD_RULES.md](./ONE_TIME_BUILD_RULES.md) for complete workflow.
 
 The repository includes a custom GitHub Copilot agent configured for this project:
 
-- **Location**: `.github/copilot/course-crafter-developer.md`
+- **Location**: `.github/agents/course-crafter-developer.agent.md`
 - **Purpose**: Provides project-specific context and development rules to GitHub Copilot
 - **Usage**: When creating issues or using chat, select the "Course Crafter Developer" agent for context-aware assistance
 
