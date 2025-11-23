@@ -5,6 +5,7 @@ import { HomePage } from './components/HomePage';
 import { Engine1 } from './components/engines/Engine1/Engine1';
 import { Engine2 } from './components/engines/Engine2/Engine2';
 import { QADashboard } from './components/qa/QADashboard';
+import { NotFound } from './components/NotFound';
 
 const basename = import.meta.env.PROD ? '/Course-creator' : '';
 
@@ -20,7 +21,7 @@ function App() {
             <Route path="/engine3" element={<Navigate to="/" replace />} />
             <Route path="/engine4" element={<Navigate to="/" replace />} />
             <Route path="/system-health" element={<QADashboard />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </MainLayout>
       </Router>
