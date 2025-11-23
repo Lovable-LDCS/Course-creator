@@ -22,23 +22,25 @@ The user reported two issues:
 **Conclusion**: The 404 error was resolved by previous fixes. Current deployment is working correctly.
 
 ### Custom Agent Investigation
-- Found agent file at `.github/agents/course-crafter-developer.agent.md`
+- Found agent file at `.github/copilot/course-crafter-developer.md`
 - Researched GitHub Copilot custom agent requirements
-- **Root Cause**: GitHub Copilot expects custom agents in `.github/copilot/` directory, not `.github/agents/`
+- **Root Cause**: GitHub Copilot expects custom agents in `.github/agents/` directory with `.agent.md` extension and YAML frontmatter, not in `.github/copilot/` directory
 
 ## Solutions Implemented
 
 ### 1. Custom Agent Configuration (PRIMARY FIX)
 
 **Changes Made**:
-- Moved agent file from `.github/agents/course-crafter-developer.agent.md` to `.github/copilot/course-crafter-developer.md`
-- Removed empty `.github/agents/` directory
+- Created proper agent file at `.github/agents/course-crafter-developer.agent.md` with YAML frontmatter
+- Added required metadata: name, description, and tools
+- Kept original agent content with all project-specific instructions
 - Updated all documentation references to new location
 
 **Files Modified**:
-- `.github/copilot/course-crafter-developer.md` (moved)
+- `.github/agents/course-crafter-developer.agent.md` (created with YAML frontmatter)
 - `PROJECT_PROGRESS.md` (updated reference)
-- `README.md` (added agent documentation)
+- `README.md` (updated agent documentation)
+- `AGENT_SETUP.md` (corrected location and added frontmatter documentation)
 
 **Expected Result**: Custom agent will now appear in GitHub Copilot UI when:
 - Creating new issues (agent selector dropdown)
@@ -87,8 +89,9 @@ Created comprehensive documentation to help prevent future issues:
 - ✅ 404 handling implemented (NotFound component)
 
 ### Agent Configuration Verification
-- ✅ Agent file in correct location (`.github/copilot/`)
-- ✅ Agent file properly named (`course-crafter-developer.md`)
+- ✅ Agent file in correct location (`.github/agents/`)
+- ✅ Agent file properly named (`course-crafter-developer.agent.md`)
+- ✅ YAML frontmatter included with required metadata
 - ✅ All documentation references updated
 - ✅ Setup guide created
 
@@ -96,12 +99,12 @@ Created comprehensive documentation to help prevent future issues:
 
 | File | Type | Description |
 |------|------|-------------|
-| `.github/copilot/course-crafter-developer.md` | Moved | Custom agent configuration (from .github/agents/) |
+| `.github/agents/course-crafter-developer.agent.md` | Created | Custom agent configuration with YAML frontmatter |
 | `PROJECT_PROGRESS.md` | Modified | Updated agent file reference |
-| `README.md` | Modified | Added agent documentation section |
-| `AGENT_SETUP.md` | Created | Comprehensive agent setup guide |
+| `README.md` | Modified | Updated agent documentation section |
+| `AGENT_SETUP.md` | Modified | Corrected location and added frontmatter documentation |
 | `DEPLOYMENT_STATUS.md` | Created | Deployment status and troubleshooting |
-| `ISSUE_RESOLUTION_SUMMARY.md` | Created | This summary document |
+| `ISSUE_RESOLUTION_SUMMARY.md` | Modified | Updated with correct agent configuration |
 
 ## Next Steps for User
 
@@ -136,8 +139,8 @@ Created comprehensive documentation to help prevent future issues:
 ### Agent Directory Structure
 ```
 .github/
-├── copilot/
-│   └── course-crafter-developer.md    # ✅ Correct location
+├── agents/
+│   └── course-crafter-developer.agent.md    # ✅ Correct location with YAML frontmatter
 └── workflows/
     └── deploy.yml
 ```
@@ -166,7 +169,7 @@ Both reported issues have been resolved:
 
 1. **✅ 404 Error**: Not currently occurring. Latest deployment (run #7) successful. Proper configuration verified and documented.
 
-2. **✅ Custom Agent Not Selectable**: Fixed by moving agent file to correct directory (`.github/copilot/`). Comprehensive setup documentation added.
+2. **✅ Custom Agent Not Selectable**: Fixed by creating properly formatted agent file at `.github/agents/course-crafter-developer.agent.md` with required YAML frontmatter. Comprehensive setup documentation added.
 
 **Current Status**: All systems operational. Ready for user verification after merge.
 

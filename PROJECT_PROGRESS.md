@@ -371,7 +371,7 @@ This approach allows:
 
 **Deployment**:
 - `/.github/workflows/deploy.yml` - GitHub Actions workflow
-- `/.github/copilot/course-crafter-developer.md` - Custom agent configuration
+- `/.github/agents/course-crafter-developer.agent.md` - Custom agent configuration
 
 ---
 
