@@ -1,5 +1,13 @@
 name: Deploy to GitHub Pages
 
+# Build Agent Integration:
+# This workflow implements automated QA principles to prevent failed builds from deploying:
+# - Validates dependencies install correctly
+# - Enforces code quality standards via linting
+# - Ensures successful build completion
+# - Validates build output artifacts exist
+# - Only deploys if all validation steps pass
+
 on:
   push:
     branches: [main]
@@ -29,13 +37,63 @@ jobs:
           cache: 'npm'
           
       - name: Install dependencies
-        run: npm ci
+        # Note: --legacy-peer-deps flag required due to @headlessui/react peer dependency
+        # on React ^16||^17||^18, while project uses React 19.2.0. This is a known compatibility
+        # issue and the flag is the recommended workaround until library updates.
+        run: npm ci --legacy-peer-deps
+      
+      - name: Lint code
+        run: npm run lint
+        continue-on-error: false
         
       - name: Build
         run: npm run build
         env:
           VITE_OPENAI_API_KEY: ${{ secrets.VITE_OPENAI_API_KEY }}
           VITE_APP_ENV: production
+          NODE_ENV: production
+      
+      - name: Validate build output
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist directory not found"
+            exit 1
+          fi
+          if [ ! -f "dist/index.html" ]; then
+            echo "Error: index.html not found in dist"
+            exit 1
+          fi
+          # Verify assets directory exists
+          if [ ! -d "dist/assets" ]; then
+            echo "Error: assets directory not found in dist"
+            exit 1
+          fi
+          echo "✅ Build validation passed"
+          echo "✅ dist directory created"
+          echo "✅ index.html exists"
+          echo "✅ assets directory exists"
+      
+      - name: Check for QA compliance (DE-007)
+        run: |
+          # Verify NotFound component exists in source
+          if [ ! -f "src/components/NotFound.tsx" ]; then
+            echo "Error: NotFound component not found (QA spec WI-008)"
+            exit 1
+          fi
+          # Verify NotFound component is imported in App.tsx
+          if ! grep -q "NotFound" "src/App.tsx"; then
+            echo "Error: NotFound component not integrated in routing (QA spec WI-008)"
+            exit 1
+          fi
+          # Verify catch-all route exists in App.tsx
+          if ! grep -q 'path="\*"' "src/App.tsx"; then
+            echo "Error: Catch-all route not found in App.tsx (QA spec WI-008)"
+            exit 1
+          fi
+          echo "✅ QA DE-007: 404 handling implemented"
+          echo "✅ QA WI-008: NotFound component exists"
+          echo "✅ QA WI-008: NotFound component integrated in routing"
+          echo "✅ QA WI-008: Catch-all route configured"
           
       - name: Setup Pages
         uses: actions/configure-pages@v4
