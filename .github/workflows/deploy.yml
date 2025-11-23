@@ -38,7 +38,7 @@ jobs:
           
       - name: Install dependencies
         # Note: --legacy-peer-deps flag required due to @headlessui/react peer dependency
-        # on React ^16||^17||^18, while project uses React 19. This is a known compatibility
+        # on React ^16||^17||^18, while project uses React 19.2.0. This is a known compatibility
         # issue and the flag is the recommended workaround until library updates.
         run: npm ci --legacy-peer-deps
       

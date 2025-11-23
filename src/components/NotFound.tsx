@@ -4,6 +4,15 @@ import { Button } from './common/Button';
 export function NotFound() {
   const navigate = useNavigate();
 
+  const handleGoBack = () => {
+    // Check if there's history to go back to, otherwise go home
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="text-center px-4">
@@ -23,7 +32,7 @@ export function NotFound() {
             Go to Home
           </Button>
           <Button 
-            onClick={() => navigate(-1)}
+            onClick={handleGoBack}
             variant="secondary"
           >
             Go Back
