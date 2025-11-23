@@ -1,14 +1,24 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ENGINES } from '../config/app.config';
+import { VoiceoverEngineModal } from './engines/voiceover/VoiceoverEngineModal';
 
 export function HomePage() {
+  const [isVoiceoverModalOpen, setIsVoiceoverModalOpen] = useState(false);
+
+  const handleEngineClick = (engineId: string) => {
+    if (engineId === 'engine1') {
+      setIsVoiceoverModalOpen(true);
+    }
+  };
+
   return (
     <div className="flex-1 p-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">🎓</div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Welcome to Course Crafter
+            Welcome to Video Factory
           </h1>
           <p className="text-xl text-gray-600">
             Transform your educational content into professional training materials with AI
@@ -17,20 +27,40 @@ export function HomePage() {
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {ENGINES.filter((e) => e.enabled).map((engine) => (
-            <Link
-              key={engine.id}
-              to={`/${engine.id}`}
-              className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-transparent hover:border-primary-500"
-            >
-              <div className="text-5xl mb-4">{engine.icon}</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{engine.name}</h2>
-              <p className="text-gray-600">{engine.description}</p>
-              <div className="mt-4 text-primary-600 font-medium">
-                Get Started →
-              </div>
-            </Link>
+            engine.id === 'engine1' ? (
+              <button
+                key={engine.id}
+                onClick={() => handleEngineClick(engine.id)}
+                className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-transparent hover:border-primary-500 text-left w-full"
+              >
+                <div className="text-5xl mb-4">{engine.icon}</div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">{engine.name}</h2>
+                <p className="text-gray-600">{engine.description}</p>
+                <div className="mt-4 text-primary-600 font-medium">
+                  Get Started →
+                </div>
+              </button>
+            ) : (
+              <Link
+                key={engine.id}
+                to={`/${engine.id}`}
+                className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow border-2 border-transparent hover:border-primary-500"
+              >
+                <div className="text-5xl mb-4">{engine.icon}</div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">{engine.name}</h2>
+                <p className="text-gray-600">{engine.description}</p>
+                <div className="mt-4 text-primary-600 font-medium">
+                  Get Started →
+                </div>
+              </Link>
+            )
           ))}
         </div>
+
+        <VoiceoverEngineModal
+          isOpen={isVoiceoverModalOpen}
+          onClose={() => setIsVoiceoverModalOpen(false)}
+        />
 
         <div className="bg-blue-50 rounded-lg p-8 border border-blue-200">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Features</h2>
