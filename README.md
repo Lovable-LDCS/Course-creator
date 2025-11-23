@@ -149,11 +149,15 @@ Access the QA Dashboard from the "System Health" button in the top navigation.
 
 The application is deployed to GitHub Pages automatically on pushes to the `main` branch.
 
-### GitHub Pages Setup
+**Live Application**: https://lovable-ldcs.github.io/Course-creator/
 
-1. Enable GitHub Pages in repository settings
-2. Configure deployment source: GitHub Actions
-3. Add OpenAI API key as repository secret: `VITE_OPENAI_API_KEY`
+For complete deployment instructions, setup guide, and troubleshooting, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+### Quick Setup
+
+1. Enable GitHub Pages in repository settings (Source: GitHub Actions)
+2. Add OpenAI API key as repository secret: `VITE_OPENAI_API_KEY`
+3. Push to `main` branch or manually trigger deployment workflow
 
 The deployment workflow handles building and deploying automatically.
 
