@@ -6,11 +6,31 @@ This repository includes a custom GitHub Copilot agent that provides project-spe
 
 ## Agent Location
 
-**File Path**: `.github/copilot/course-crafter-developer.md`
+**File Path**: `.github/agents/course-crafter-developer.agent.md`
 
-**Important**: GitHub Copilot expects custom agents to be in the `.github/copilot/` directory. The agent will not be selectable if placed in other directories (such as `.github/agents/`).
+**Important**: GitHub Copilot expects custom agents to be in the `.github/agents/` directory with the `.agent.md` extension. The agent file must include YAML frontmatter with metadata (name, description, and tools).
 
 ## Using the Custom Agent
+
+### Agent File Format
+
+Custom agents must include YAML frontmatter at the beginning of the file:
+
+```yaml
+---
+name: course-crafter-developer
+description: Expert agent for Course Crafter project development
+tools:
+  - read
+  - edit
+  - search
+---
+```
+
+The frontmatter includes:
+- **name**: Unique identifier for the agent (used when invoking with @)
+- **description**: Brief explanation of the agent's capabilities (required)
+- **tools**: List of Copilot tools the agent can use (optional)
 
 ### In GitHub Issues
 
@@ -73,17 +93,18 @@ The agent knows about comprehensive QA requirements including:
 
 If the custom agent doesn't appear in the GitHub Copilot UI:
 
-1. **Check File Location**: Ensure the agent file is in `.github/copilot/` (not `.github/agents/`)
-2. **Check File Extension**: File should be `.md` (not `.agent.md`)
-3. **Wait for Sync**: After moving files, GitHub may need a few minutes to detect the agent
-4. **Check Repository Settings**: Ensure GitHub Copilot is enabled for your repository
-5. **Refresh/Reload**: Try refreshing your browser or restarting your IDE
+1. **Check File Location**: Ensure the agent file is in `.github/agents/` (not `.github/copilot/`)
+2. **Check File Extension**: File should be `.agent.md` (not just `.md`)
+3. **Check YAML Frontmatter**: The file must start with YAML frontmatter including `name` and `description` fields
+4. **Wait for Sync**: After creating/moving files, GitHub may need a few minutes to detect the agent
+5. **Check Repository Settings**: Ensure GitHub Copilot is enabled for your repository
+6. **Refresh/Reload**: Try refreshing your browser or restarting your IDE
 
 ### Agent Not Providing Expected Context
 
 If the agent is available but not providing the expected context:
 
-1. **Check Agent Content**: Review `.github/copilot/course-crafter-developer.md` to ensure it has the correct instructions
+1. **Check Agent Content**: Review `.github/agents/course-crafter-developer.agent.md` to ensure it has the correct instructions
 2. **Be Specific**: Provide clear, specific questions or requests
 3. **Reference Architecture**: Mention specific documents (ARCHITECTURE.md, RULES.md, etc.) when asking questions
 
@@ -91,10 +112,10 @@ If the agent is available but not providing the expected context:
 
 ```
 .github/
-├── copilot/
-│   └── course-crafter-developer.md    # Custom agent configuration
+├── agents/
+│   └── course-crafter-developer.agent.md    # Custom agent configuration
 └── workflows/
-    └── deploy.yml                      # Deployment workflow
+    └── deploy.yml                            # Deployment workflow
 ```
 
 ## Related Documentation
