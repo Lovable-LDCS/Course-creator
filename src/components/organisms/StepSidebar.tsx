@@ -26,8 +26,12 @@ export interface StepSidebarProps {
 
 export function StepSidebar({ activeStep, onStepChange, completedSteps = [] }: StepSidebarProps) {
   return (
-    <nav className="w-64 bg-gray-50 border-r border-gray-200 p-4" role="navigation" aria-label="Steps">
-      <div className="space-y-1">
+    <nav className="w-72 bg-gradient-to-b from-primary to-primary-800 border-r border-primary-900 p-6 shadow-xl" role="navigation" aria-label="Steps">
+      <div className="mb-6">
+        <h3 className="text-white font-semibold text-lg mb-1">Workflow Steps</h3>
+        <p className="text-primary-200 text-xs">Follow these steps to create your video</p>
+      </div>
+      <div className="space-y-2">
         {STEPS.map((step, index) => {
           const isActive = step.id === activeStep;
           const isCompleted = completedSteps.includes(step.id);
@@ -38,26 +42,45 @@ export function StepSidebar({ activeStep, onStepChange, completedSteps = [] }: S
               onClick={() => onStepChange(step.id)}
               className={cn(
                 'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all',
-                'focus:outline-none focus:ring-2 focus:ring-primary-500',
+                'focus:outline-none focus:ring-2 focus:ring-white/50',
                 isActive
-                  ? 'bg-primary-100 text-primary-900 font-medium shadow-sm'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  ? 'bg-white text-primary shadow-lg scale-105'
+                  : isCompleted
+                  ? 'bg-white/10 text-white hover:bg-white/20'
+                  : 'text-white/70 hover:bg-white/10 hover:text-white'
               )}
               aria-current={isActive ? 'step' : undefined}
             >
-              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-sm">
-                {step.icon}
+              <span className={cn(
+                "flex items-center justify-center w-10 h-10 rounded-full transition-all",
+                isActive
+                  ? 'bg-secondary text-white shadow-md'
+                  : isCompleted
+                  ? 'bg-success text-white'
+                  : 'bg-white/20 text-white'
+              )}>
+                {isCompleted && !isActive ? (
+                  <CheckCircle className="w-5 h-5" />
+                ) : (
+                  step.icon
+                )}
               </span>
               <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-gray-500">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className={cn(
+                    "text-xs font-semibold",
+                    isActive ? 'text-secondary' : 'text-inherit'
+                  )}>
                     Step {index + 1}
                   </span>
-                  {isCompleted && (
-                    <CheckCircle className="w-4 h-4 text-green-600" aria-label="Completed" />
+                  {isCompleted && !isActive && (
+                    <span className="text-xs text-success font-medium">✓</span>
                   )}
                 </div>
-                <div className="text-sm">{step.label}</div>
+                <div className={cn(
+                  "text-sm font-medium",
+                  isActive && 'font-semibold'
+                )}>{step.label}</div>
               </div>
             </button>
           );
