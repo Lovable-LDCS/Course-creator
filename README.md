@@ -180,7 +180,7 @@ Video Factory includes comprehensive QA testing across 10 categories:
 - Code Correctness (25 tests)
 - Wiring & Integration (30 tests)
 - Security (15 tests)
-- Deployment (10 tests)
+- **Deployment (13 tests)** ⭐ *Including post-deployment smoke tests*
 - UI/UX (20 tests)
 - Performance & Timing (15 tests)
 - Runtime Rendering (10 tests)
@@ -188,9 +188,19 @@ Video Factory includes comprehensive QA testing across 10 categories:
 - Data Integrity (18 tests)
 - Duplicates & Legacy (5 tests)
 
-**Total: 160 tests**
+**Total: 163 tests**
 
 Access the QA Dashboard from the "System Health" button in the top navigation.
+
+### Post-Deployment Smoke Tests
+
+To catch 404 errors and deployment failures, the CI/CD pipeline now includes **automated post-deployment smoke tests** that verify:
+- All critical routes return 200 OK (not GitHub's 404 page)
+- Base path configuration is correct
+- SPA routing works properly
+- Assets load correctly
+
+See [SMOKE_TESTS.md](./SMOKE_TESTS.md) for details.
 
 ## Best Practices & Compliance
 

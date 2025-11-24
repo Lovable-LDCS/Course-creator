@@ -1,6 +1,6 @@
 # Course Crafter - QA Specification & Test Suite
 
-## Version: 1.0.0
+## Version: 1.1.0
 ## Status: RED (All tests expected to fail initially)
 
 ---
@@ -30,6 +30,7 @@
 - 100% of user-facing features tested
 - 100% of critical paths validated
 - All integration points verified
+- **Post-deployment smoke tests** to catch 404 errors and deployment failures
 
 ---
 
@@ -42,14 +43,14 @@
 | Code Correctness | Critical | 25 | 20% |
 | Wiring & Integration | Critical | 30 | 25% |
 | Security | Critical | 15 | 15% |
-| Deployment | High | 10 | 10% |
+| Deployment | High | 13 | 10% |
 | UI/UX | High | 20 | 15% |
 | Performance & Timing | Medium | 15 | 10% |
 | Runtime Rendering | Medium | 10 | 2.5% |
 | Accessibility | High | 12 | 2.5% |
 | Data Integrity | Critical | 18 | 15% |
 | Duplicates & Legacy | Low | 5 | 2.5% |
-| **TOTAL** | | **160** | **100%** |
+| **TOTAL** | | **163** | **100%** |
 
 ---
 
@@ -449,10 +450,29 @@
 - ✅ **Pass Criteria**: All required secrets present
 - ✅ **Validation**: Secrets audit
 
-#### DE-007: GitHub Pages Compatibility
+#### DE-007: GitHub Pages Deployment - Homepage Accessibility
 - ✅ **Test**: App loads on GitHub Pages URL
-- ✅ **Pass Criteria**: No 404 errors, routing works
-- ✅ **Validation**: Production URL test
+- ✅ **Pass Criteria**: Homepage returns 200 OK, not GitHub 404 page
+- ✅ **Validation**: Post-deployment smoke test (curl homepage)
+- ✅ **Implementation**: `.github/workflows/deploy.yml` smoke-test job
+
+#### DE-007-A: GitHub Pages Deployment - Route Accessibility
+- ✅ **Test**: All critical routes accessible after deployment
+- ✅ **Pass Criteria**: /engine1, /engine2, /system-health return 200 OK
+- ✅ **Validation**: Post-deployment smoke tests
+- ✅ **Implementation**: Automated curl tests in deployment workflow
+
+#### DE-007-B: GitHub Pages Deployment - 404 Handling
+- ✅ **Test**: Invalid routes show app NotFound component, not GitHub 404
+- ✅ **Pass Criteria**: Invalid routes return 200 (SPA routing) or custom 404, not GitHub's "File not found" page
+- ✅ **Validation**: Post-deployment smoke test on /nonexistent-route
+- ✅ **Implementation**: Content check for "File not found" text
+
+#### DE-007-C: GitHub Pages Deployment - Base Path Configuration
+- ✅ **Test**: Base path correctly configured for GitHub Pages
+- ✅ **Pass Criteria**: Assets load with correct /Course-creator/ prefix
+- ✅ **Validation**: Check dist/index.html for correct asset paths
+- ✅ **Implementation**: Build output validation step
 
 #### DE-008: Browser Compatibility - Chrome
 - ✅ **Test**: App works in Chrome 100+
@@ -908,11 +928,11 @@ All tests marked as **Critical** priority must pass:
 
 ### 4.2 High Priority Tests (Must Pass)
 All tests marked as **High** priority must pass:
-- Deployment: 10/10
+- Deployment: 13/13
 - UI/UX: 20/20
 - Accessibility: 12/12
 
-**Total High: 42/42 (100%)**
+**Total High: 45/45 (100%)**
 
 ### 4.3 Medium/Low Priority Tests (90% Pass Rate)
 - Performance & Timing: 14/15 (93%)
@@ -922,8 +942,8 @@ All tests marked as **High** priority must pass:
 **Total Medium/Low: 28/30 (93%)**
 
 ### 4.4 Overall Success Criteria
-- **Critical + High**: 130/130 (100%)
-- **Overall**: 158/160 (98.75%)
+- **Critical + High**: 133/133 (100%)
+- **Overall**: 161/163 (98.77%)
 - **System Health Score**: 90+ (Excellent)
 
 ---
@@ -941,16 +961,16 @@ npm run qa:all
 COURSE CRAFTER QA TEST SUITE
 ==================================
 
-Total Tests: 160
+Total Tests: 163
 Passed: 0
-Failed: 160
+Failed: 163
 Success Rate: 0%
 
 Category Breakdown:
 - Code Correctness: 0/25 ❌
 - Wiring & Integration: 0/30 ❌
 - Security: 0/15 ❌
-- Deployment: 0/10 ❌
+- Deployment: 0/13 ❌
 - UI/UX: 0/20 ❌
 - Performance & Timing: 0/15 ❌
 - Runtime Rendering: 0/10 ❌
@@ -979,16 +999,16 @@ npm run qa:all
 COURSE CRAFTER QA TEST SUITE
 ==================================
 
-Total Tests: 160
-Passed: 158
+Total Tests: 163
+Passed: 161
 Failed: 2
-Success Rate: 98.75%
+Success Rate: 98.77%
 
 Category Breakdown:
 - Code Correctness: 25/25 ✅
 - Wiring & Integration: 30/30 ✅
 - Security: 15/15 ✅
-- Deployment: 10/10 ✅
+- Deployment: 13/13 ✅
 - UI/UX: 20/20 ✅
 - Performance & Timing: 14/15 ⚠️
 - Runtime Rendering: 9/10 ⚠️
@@ -1006,6 +1026,7 @@ System Health: 92% - EXCELLENT ❤️
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2025-11-21 | Initial QA specification |
+| 1.1.0 | 2025-11-24 | Added post-deployment smoke tests (DE-007-A through DE-007-C) to catch 404 errors and deployment failures |
 
 ---
 
@@ -1014,4 +1035,4 @@ System Health: 92% - EXCELLENT ❤️
 This QA specification represents the complete test suite for Course Crafter. All tests must pass (or meet minimum thresholds) before handover.
 
 **Status**: ❌ RED (Initial State)
-**Target**: ✅ GREEN (98.75%+ pass rate)
+**Target**: ✅ GREEN (98.77%+ pass rate)
