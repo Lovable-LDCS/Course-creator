@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { ENGINES, APP_NAME } from '../../config/app.config';
 import { cn } from '../../lib/utils';
 import { Activity } from 'lucide-react';
 import { VoiceoverEngineModal } from '../engines/voiceover/VoiceoverEngineModal';
 
 export function TopNavigation() {
-  const location = useLocation();
   const [activeEngineModal, setActiveEngineModal] = useState<string | null>(null);
 
   const handleEngineClick = (engineId: string, enabled: boolean) => {
