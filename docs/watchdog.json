@@ -1,0 +1,439 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Course Crafter Watchdog Configuration",
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-25",
+  "status": "active",
+  
+  "description": "Watchdog monitors system behavior, drift detection, compliance, and AI behavioral notes for Course Crafter.",
+  
+  "driftDetection": {
+    "enabled": true,
+    "description": "Rules for detecting when implementation drifts from architecture",
+    "rules": [
+      {
+        "id": "DRIFT-001",
+        "name": "Route Mismatch",
+        "description": "Detect when routes in code don't match architecture spec",
+        "check": "Compare App.tsx routes against architecture/rules.md",
+        "severity": "critical",
+        "action": "Alert and block deployment"
+      },
+      {
+        "id": "DRIFT-002",
+        "name": "Component Location",
+        "description": "Detect components not in architectural locations",
+        "check": "Verify component files exist in specified directories",
+        "severity": "high",
+        "action": "Alert developer"
+      },
+      {
+        "id": "DRIFT-003",
+        "name": "Technology Stack",
+        "description": "Detect package version drift from spec",
+        "check": "Compare package.json against architecture spec",
+        "severity": "medium",
+        "action": "Log warning"
+      },
+      {
+        "id": "DRIFT-004",
+        "name": "Dead Code Detection",
+        "description": "Detect unwired components or functions",
+        "check": "Static analysis for unused exports",
+        "severity": "high",
+        "action": "Alert and flag for removal"
+      },
+      {
+        "id": "DRIFT-005",
+        "name": "API Contract Drift",
+        "description": "Detect changes to API service interfaces",
+        "check": "Compare service interfaces against spec",
+        "severity": "high",
+        "action": "Alert developer"
+      }
+    ],
+    "scanFrequency": "on-commit",
+    "reportLocation": "qa/reports/drift/"
+  },
+  
+  "minimumBehaviorExpectations": {
+    "description": "Minimum system behavior that must always be maintained",
+    "behaviors": [
+      {
+        "id": "BEH-001",
+        "name": "Application Loads",
+        "expectation": "App must load without errors in under 3 seconds",
+        "severity": "critical"
+      },
+      {
+        "id": "BEH-002",
+        "name": "Navigation Works",
+        "expectation": "All navigation links must route correctly",
+        "severity": "critical"
+      },
+      {
+        "id": "BEH-003",
+        "name": "No Console Errors",
+        "expectation": "Zero console.error in production mode",
+        "severity": "critical"
+      },
+      {
+        "id": "BEH-004",
+        "name": "Graceful Error Handling",
+        "expectation": "Errors must be caught and displayed user-friendly",
+        "severity": "high"
+      },
+      {
+        "id": "BEH-005",
+        "name": "File Upload Responds",
+        "expectation": "File upload must provide feedback within 500ms",
+        "severity": "high"
+      },
+      {
+        "id": "BEH-006",
+        "name": "State Consistency",
+        "expectation": "Application state must remain consistent across navigation",
+        "severity": "high"
+      },
+      {
+        "id": "BEH-007",
+        "name": "Responsive UI",
+        "expectation": "UI must adapt to viewport sizes from 375px to 1920px",
+        "severity": "medium"
+      },
+      {
+        "id": "BEH-008",
+        "name": "Keyboard Accessible",
+        "expectation": "All interactive elements must be keyboard accessible",
+        "severity": "high"
+      }
+    ]
+  },
+  
+  "aiBehavioralNotes": {
+    "description": "Guidelines and observations for AI agent behavior",
+    "guidelines": [
+      {
+        "id": "AI-001",
+        "context": "Architecture First",
+        "note": "Always update architecture documentation before implementing features",
+        "enforcement": "required"
+      },
+      {
+        "id": "AI-002",
+        "context": "QA Alignment",
+        "note": "Add QA tests before or alongside implementation, never after",
+        "enforcement": "required"
+      },
+      {
+        "id": "AI-003",
+        "context": "No Silent Fixes",
+        "note": "Never fix issues without first documenting them in QA (RED state)",
+        "enforcement": "required"
+      },
+      {
+        "id": "AI-004",
+        "context": "Wiring Verification",
+        "note": "Every component must be wired and accessible from UI",
+        "enforcement": "required"
+      },
+      {
+        "id": "AI-005",
+        "context": "Legacy Code Policy",
+        "note": "Remove unwired code after second consecutive detection",
+        "enforcement": "recommended"
+      },
+      {
+        "id": "AI-006",
+        "context": "User Communication",
+        "note": "Communicate in plain English, avoid technical jargon with user",
+        "enforcement": "recommended"
+      },
+      {
+        "id": "AI-007",
+        "context": "One-Time Build",
+        "note": "Aim to build correctly first time, minimize rework cycles",
+        "enforcement": "recommended"
+      },
+      {
+        "id": "AI-008",
+        "context": "Handover Only When GREEN",
+        "note": "Never hand over to user until QA is GREEN",
+        "enforcement": "required"
+      }
+    ],
+    "learningNotes": [
+      {
+        "date": "2025-11-25",
+        "observation": "Initial setup - establishing architecture-first workflow",
+        "action": "Created architecture/, qa/, docs/ structure"
+      }
+    ]
+  },
+  
+  "complianceMonitoring": {
+    "description": "Categories for compliance monitoring",
+    "categories": [
+      {
+        "id": "COMP-CODE",
+        "name": "Code Quality Compliance",
+        "checks": [
+          "TypeScript strict mode enabled",
+          "ESLint rules followed",
+          "No any types (except justified)",
+          "Consistent code style"
+        ],
+        "frequency": "on-commit",
+        "severity": "high"
+      },
+      {
+        "id": "COMP-ARCH",
+        "name": "Architecture Compliance",
+        "checks": [
+          "Component hierarchy matches spec",
+          "Routes match architecture",
+          "Services follow defined patterns",
+          "No architectural violations"
+        ],
+        "frequency": "on-commit",
+        "severity": "critical"
+      },
+      {
+        "id": "COMP-SEC",
+        "name": "Security Compliance",
+        "checks": [
+          "No hardcoded secrets",
+          "Input validation present",
+          "XSS prevention",
+          "Dependency audit clean"
+        ],
+        "frequency": "on-commit",
+        "severity": "critical"
+      },
+      {
+        "id": "COMP-A11Y",
+        "name": "Accessibility Compliance",
+        "checks": [
+          "WCAG AA standards met",
+          "Keyboard navigation works",
+          "Screen reader compatible",
+          "Color contrast adequate"
+        ],
+        "frequency": "weekly",
+        "severity": "high"
+      },
+      {
+        "id": "COMP-PERF",
+        "name": "Performance Compliance",
+        "checks": [
+          "Bundle size under limit",
+          "Load time acceptable",
+          "No memory leaks",
+          "Smooth interactions"
+        ],
+        "frequency": "weekly",
+        "severity": "medium"
+      }
+    ]
+  },
+  
+  "securityMonitoring": {
+    "description": "Security monitoring and POPI Act compliance placeholders",
+    "popi": {
+      "description": "Protection of Personal Information Act (South Africa) compliance",
+      "status": "placeholder",
+      "requirements": [
+        {
+          "id": "POPI-001",
+          "requirement": "Data Minimization",
+          "description": "Only collect necessary personal information",
+          "status": "not-applicable",
+          "notes": "Current version stores no personal data"
+        },
+        {
+          "id": "POPI-002",
+          "requirement": "Purpose Specification",
+          "description": "Clearly specify purpose of data collection",
+          "status": "not-applicable",
+          "notes": "No data collection in current version"
+        },
+        {
+          "id": "POPI-003",
+          "requirement": "Security Safeguards",
+          "description": "Implement appropriate security measures",
+          "status": "in-progress",
+          "notes": "API key protection, input validation"
+        },
+        {
+          "id": "POPI-004",
+          "requirement": "Data Subject Rights",
+          "description": "Allow users to access/delete their data",
+          "status": "not-applicable",
+          "notes": "No user data storage currently"
+        }
+      ]
+    },
+    "gdpr": {
+      "description": "General Data Protection Regulation (EU) compliance",
+      "status": "placeholder",
+      "requirements": [
+        {
+          "id": "GDPR-001",
+          "requirement": "Lawful Basis",
+          "status": "not-applicable"
+        },
+        {
+          "id": "GDPR-002",
+          "requirement": "Data Protection by Design",
+          "status": "in-progress"
+        },
+        {
+          "id": "GDPR-003",
+          "requirement": "Right to Erasure",
+          "status": "not-applicable"
+        }
+      ]
+    },
+    "securityChecks": [
+      {
+        "id": "SEC-001",
+        "name": "API Key Exposure",
+        "check": "Scan for hardcoded API keys",
+        "frequency": "on-commit",
+        "severity": "critical"
+      },
+      {
+        "id": "SEC-002",
+        "name": "Dependency Vulnerabilities",
+        "check": "npm audit",
+        "frequency": "daily",
+        "severity": "high"
+      },
+      {
+        "id": "SEC-003",
+        "name": "XSS Vulnerabilities",
+        "check": "Static analysis for unsafe DOM operations",
+        "frequency": "on-commit",
+        "severity": "critical"
+      },
+      {
+        "id": "SEC-004",
+        "name": "Sensitive Data in Logs",
+        "check": "Scan console statements for sensitive data",
+        "frequency": "on-commit",
+        "severity": "high"
+      }
+    ]
+  },
+  
+  "internationalStandards": {
+    "description": "International standards compliance placeholders",
+    "standards": [
+      {
+        "id": "ISO-27001",
+        "name": "Information Security Management",
+        "status": "placeholder",
+        "relevance": "future",
+        "notes": "Consider for enterprise version"
+      },
+      {
+        "id": "ISO-9001",
+        "name": "Quality Management",
+        "status": "placeholder",
+        "relevance": "future",
+        "notes": "QA system foundation in place"
+      },
+      {
+        "id": "WCAG-2.1",
+        "name": "Web Content Accessibility Guidelines",
+        "status": "in-progress",
+        "relevance": "current",
+        "notes": "Target AA compliance"
+      },
+      {
+        "id": "SCORM",
+        "name": "Sharable Content Object Reference Model",
+        "status": "placeholder",
+        "relevance": "future",
+        "notes": "For LMS integration in Engine 4"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "SOC 2",
+        "status": "not-applicable",
+        "notes": "Consider for SaaS version"
+      }
+    ]
+  },
+  
+  "alertConfiguration": {
+    "channels": [
+      {
+        "type": "console",
+        "enabled": true,
+        "severity": ["critical", "high", "medium", "low"]
+      },
+      {
+        "type": "github-issue",
+        "enabled": false,
+        "severity": ["critical", "high"]
+      },
+      {
+        "type": "email",
+        "enabled": false,
+        "severity": ["critical"]
+      }
+    ],
+    "escalation": {
+      "critical": {
+        "notifyImmediately": true,
+        "blockDeployment": true
+      },
+      "high": {
+        "notifyImmediately": false,
+        "blockDeployment": false,
+        "reviewRequired": true
+      },
+      "medium": {
+        "logOnly": true
+      },
+      "low": {
+        "logOnly": true
+      }
+    }
+  },
+  
+  "reporting": {
+    "automated": {
+      "driftReport": {
+        "frequency": "on-commit",
+        "format": "json",
+        "location": "qa/reports/drift/"
+      },
+      "complianceReport": {
+        "frequency": "weekly",
+        "format": "json",
+        "location": "qa/reports/compliance/"
+      },
+      "securityReport": {
+        "frequency": "daily",
+        "format": "json",
+        "location": "qa/reports/security/"
+      }
+    },
+    "manual": {
+      "architectureReview": {
+        "frequency": "per-milestone",
+        "format": "markdown"
+      }
+    }
+  },
+  
+  "metadata": {
+    "createdBy": "Architecture Team",
+    "purpose": "System monitoring and compliance tracking",
+    "lastAudit": "2025-11-25",
+    "nextAudit": "TBD"
+  }
+}

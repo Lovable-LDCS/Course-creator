@@ -1,0 +1,469 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Course Crafter QA Checklist",
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-25",
+  "status": "active",
+  
+  "categories": {
+    "codeCorrectness": {
+      "name": "Code Correctness",
+      "weight": 20,
+      "priority": "critical",
+      "tests": [
+        {
+          "id": "CC-001",
+          "name": "TypeScript Strict Mode",
+          "description": "Verify strict mode enabled in tsconfig.json",
+          "passCriteria": "strict: true in tsconfig",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "CC-002",
+          "name": "No Any Types",
+          "description": "Scan codebase for explicit any types",
+          "passCriteria": "Zero instances of : any except in type definitions",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "CC-003",
+          "name": "Error Handling",
+          "description": "All async functions have try-catch blocks",
+          "passCriteria": "No unhandled promise rejections",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "CC-004",
+          "name": "Input Validation",
+          "description": "All user inputs validated before processing",
+          "passCriteria": "Zod schemas for all forms",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "CC-005",
+          "name": "File Validation",
+          "description": "File type and size validation",
+          "passCriteria": "Only allowed extensions accepted, size limits enforced",
+          "automated": true,
+          "status": "pending"
+        }
+      ]
+    },
+    
+    "wiringIntegration": {
+      "name": "Wiring & Integration",
+      "weight": 25,
+      "priority": "critical",
+      "tests": [
+        {
+          "id": "WI-001",
+          "name": "Component Hierarchy",
+          "description": "Component tree structure matches architecture",
+          "passCriteria": "All components in correct locations",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "WI-002",
+          "name": "Route Configuration",
+          "description": "All engine routes configured",
+          "passCriteria": "Navigation works between engines",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "WI-003",
+          "name": "404 Handling",
+          "description": "Invalid routes show 404 page",
+          "passCriteria": "User-friendly 404 component",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "WI-004",
+          "name": "Context Providers",
+          "description": "Global context provides app state",
+          "passCriteria": "State accessible from all components",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "WI-005",
+          "name": "API Service Connection",
+          "description": "OpenAI service configured",
+          "passCriteria": "API key validation, connection test",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "WI-006",
+          "name": "File Parser Integration",
+          "description": "File parsers extract content",
+          "passCriteria": "PPTX, DOCX, PDF, MP4 parsing works",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "WI-007",
+          "name": "No Dead Code",
+          "description": "All components are wired and used",
+          "passCriteria": "Zero unused exports",
+          "automated": true,
+          "status": "pending"
+        }
+      ]
+    },
+    
+    "security": {
+      "name": "Security",
+      "weight": 15,
+      "priority": "critical",
+      "tests": [
+        {
+          "id": "SE-001",
+          "name": "API Key Protection",
+          "description": "API keys not in client-side code",
+          "passCriteria": "Keys only in environment variables",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "SE-002",
+          "name": "Environment Variables",
+          "description": "Required env vars checked at startup",
+          "passCriteria": "App handles missing keys gracefully",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "SE-003",
+          "name": "Git Ignore",
+          "description": ".env files in .gitignore",
+          "passCriteria": "No .env files in repository",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "SE-004",
+          "name": "Input Sanitization",
+          "description": "All user inputs sanitized",
+          "passCriteria": "XSS attack prevention",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "SE-005",
+          "name": "File Upload Whitelist",
+          "description": "Only allowed file types accepted",
+          "passCriteria": "Executable files rejected",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "SE-006",
+          "name": "Dependency Audit",
+          "description": "No known vulnerabilities",
+          "passCriteria": "npm audit shows no critical issues",
+          "automated": true,
+          "status": "pending"
+        }
+      ]
+    },
+    
+    "deployment": {
+      "name": "Deployment",
+      "weight": 10,
+      "priority": "high",
+      "tests": [
+        {
+          "id": "DE-001",
+          "name": "Build Success",
+          "description": "Production build completes without errors",
+          "passCriteria": "npm run build exits 0",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "DE-002",
+          "name": "Build Warnings",
+          "description": "No warnings during build",
+          "passCriteria": "Clean build output",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "DE-003",
+          "name": "Bundle Size",
+          "description": "Initial bundle size reasonable",
+          "passCriteria": "Main bundle < 500KB gzipped",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "DE-004",
+          "name": "Code Splitting",
+          "description": "Routes code-split",
+          "passCriteria": "Separate chunks for each engine",
+          "automated": true,
+          "status": "pending"
+        }
+      ]
+    },
+    
+    "uiux": {
+      "name": "UI/UX",
+      "weight": 15,
+      "priority": "high",
+      "tests": [
+        {
+          "id": "UX-001",
+          "name": "Navigation Layout",
+          "description": "Top navigation with engine buttons",
+          "passCriteria": "All buttons visible, properly spaced",
+          "automated": false,
+          "status": "pending"
+        },
+        {
+          "id": "UX-002",
+          "name": "Active State",
+          "description": "Active engine highlighted",
+          "passCriteria": "Visual distinction clear",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "UX-003",
+          "name": "Responsive Desktop",
+          "description": "Layout optimized for 1920x1080",
+          "passCriteria": "No horizontal scroll, content readable",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "UX-004",
+          "name": "Responsive Tablet",
+          "description": "Layout optimized for 768x1024",
+          "passCriteria": "Sidebar collapsible, content reflows",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "UX-005",
+          "name": "Responsive Mobile",
+          "description": "Layout works on 375x667",
+          "passCriteria": "Touch-friendly, readable",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "UX-006",
+          "name": "Loading Indicators",
+          "description": "Loading spinners during async operations",
+          "passCriteria": "User knows system is processing",
+          "automated": false,
+          "status": "pending"
+        },
+        {
+          "id": "UX-007",
+          "name": "Error Messages",
+          "description": "Error messages are clear and actionable",
+          "passCriteria": "User knows what went wrong",
+          "automated": false,
+          "status": "pending"
+        },
+        {
+          "id": "UX-008",
+          "name": "Success Feedback",
+          "description": "Success messages after operations",
+          "passCriteria": "User knows operation succeeded",
+          "automated": false,
+          "status": "pending"
+        }
+      ]
+    },
+    
+    "performance": {
+      "name": "Performance & Timing",
+      "weight": 10,
+      "priority": "medium",
+      "tests": [
+        {
+          "id": "PT-001",
+          "name": "Initial Load Time",
+          "description": "App loads in < 3 seconds",
+          "passCriteria": "Time to interactive < 3s",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "PT-002",
+          "name": "Navigation Speed",
+          "description": "Engine switching < 200ms",
+          "passCriteria": "Instant visual feedback",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "PT-003",
+          "name": "File Upload Speed",
+          "description": "File validation < 500ms",
+          "passCriteria": "Immediate feedback on invalid files",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "PT-004",
+          "name": "Memory Usage",
+          "description": "Memory stays under 500MB",
+          "passCriteria": "No memory leaks during extended use",
+          "automated": true,
+          "status": "pending"
+        }
+      ]
+    },
+    
+    "accessibility": {
+      "name": "Accessibility",
+      "weight": 5,
+      "priority": "high",
+      "tests": [
+        {
+          "id": "AC-001",
+          "name": "ARIA Labels",
+          "description": "All buttons have aria-label or text",
+          "passCriteria": "Screen reader can identify all buttons",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "AC-002",
+          "name": "Keyboard Navigation",
+          "description": "Tab order is logical",
+          "passCriteria": "Follows visual flow",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "AC-003",
+          "name": "Focus Visibility",
+          "description": "Focus indicator always visible",
+          "passCriteria": "2px outline minimum",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "AC-004",
+          "name": "Color Contrast",
+          "description": "Text meets WCAG AA contrast",
+          "passCriteria": "4.5:1 minimum for normal text",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "AC-005",
+          "name": "Semantic HTML",
+          "description": "Proper HTML elements used",
+          "passCriteria": "button, nav, header, main, footer",
+          "automated": true,
+          "status": "pending"
+        }
+      ]
+    },
+    
+    "dataIntegrity": {
+      "name": "Data Integrity",
+      "weight": 0,
+      "priority": "high",
+      "tests": [
+        {
+          "id": "DI-001",
+          "name": "PPTX Parsing",
+          "description": "PPTX content accurately extracted",
+          "passCriteria": "100% of text captured",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "DI-002",
+          "name": "DOCX Parsing",
+          "description": "DOCX content accurately extracted",
+          "passCriteria": "Headings, paragraphs, lists preserved",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "DI-003",
+          "name": "State Persistence",
+          "description": "Work-in-progress saved",
+          "passCriteria": "Refresh doesn't lose data",
+          "automated": true,
+          "status": "pending"
+        },
+        {
+          "id": "DI-004",
+          "name": "Export Integrity",
+          "description": "Exported files match internal state",
+          "passCriteria": "No data loss during export",
+          "automated": true,
+          "status": "pending"
+        }
+      ]
+    }
+  },
+  
+  "scoring": {
+    "calculation": "weighted_average",
+    "thresholds": {
+      "green": 95,
+      "amber": 85,
+      "red": 0
+    },
+    "criticalCategories": [
+      "codeCorrectness",
+      "wiringIntegration",
+      "security"
+    ],
+    "criticalPassRequired": 100
+  },
+  
+  "handoverCriteria": {
+    "mandatory": [
+      "Build passes without errors",
+      "TypeScript: zero errors",
+      "ESLint: zero errors",
+      "All routes respond correctly",
+      "No 404 errors on defined paths",
+      "No console errors in browser",
+      "Security audit passes",
+      "No dead code detected"
+    ],
+    "minimumScore": 95,
+    "criticalCategoriesPass": true
+  },
+  
+  "execution": {
+    "commands": {
+      "all": "npm run qa:all",
+      "codeCorrectness": "npm run qa:code",
+      "wiring": "npm run qa:wiring",
+      "security": "npm run qa:security",
+      "deployment": "npm run qa:deployment",
+      "uiux": "npm run qa:ui",
+      "performance": "npm run qa:performance",
+      "accessibility": "npm run qa:a11y",
+      "report": "npm run qa:report"
+    },
+    "outputFormat": "json",
+    "reportLocation": "qa/reports/"
+  },
+  
+  "metadata": {
+    "createdBy": "Architecture Team",
+    "reviewFrequency": "Each sprint",
+    "nextReview": "TBD"
+  }
+}
