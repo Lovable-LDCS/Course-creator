@@ -114,3 +114,122 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+  
+  smoke-test:
+    name: Post-Deployment Smoke Tests
+    runs-on: ubuntu-latest
+    needs: deploy
+    
+    steps:
+      - name: Wait for deployment propagation
+        run: sleep 30
+        
+      - name: Test Homepage (/)
+        run: |
+          echo "🔥 Testing homepage..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://lovable-ldcs.github.io/Course-creator/)
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ Homepage returns 200 OK"
+          else
+            echo "❌ Homepage returned $RESPONSE (expected 200)"
+            echo "⚠️  This indicates deployment failed or GitHub Pages is misconfigured"
+            exit 1
+          fi
+          
+      - name: Test Engine1 Route (/engine1)
+        run: |
+          echo "🔥 Testing /engine1 route..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://lovable-ldcs.github.io/Course-creator/engine1)
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ /engine1 returns 200 OK"
+          else
+            echo "❌ /engine1 returned $RESPONSE (expected 200)"
+            echo "⚠️  Base path configuration may be incorrect"
+            exit 1
+          fi
+          
+      - name: Test Engine2 Route (/engine2)
+        run: |
+          echo "🔥 Testing /engine2 route..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://lovable-ldcs.github.io/Course-creator/engine2)
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ /engine2 returns 200 OK"
+          else
+            echo "❌ /engine2 returned $RESPONSE (expected 200)"
+            exit 1
+          fi
+          
+      - name: Test System Health Route (/system-health)
+        run: |
+          echo "🔥 Testing /system-health route..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://lovable-ldcs.github.io/Course-creator/system-health)
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ /system-health returns 200 OK"
+          else
+            echo "❌ /system-health returned $RESPONSE (expected 200)"
+            exit 1
+          fi
+      
+      - name: Test 404 Handling (invalid route)
+        run: |
+          echo "🔥 Testing 404 handling..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://lovable-ldcs.github.io/Course-creator/nonexistent-route)
+          
+          # For SPA with client-side routing, this should return 200
+          # (GitHub Pages serves index.html, React Router handles 404)
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ Invalid route returns 200 (SPA handles 404 client-side)"
+          elif [ "$RESPONSE" = "404" ]; then
+            echo "⚠️  Invalid route returned 404"
+            echo "This might indicate GitHub Pages 404, not the app's NotFound component"
+            echo "Checking if it's GitHub's 404 page..."
+            
+            BODY=$(curl -s https://lovable-ldcs.github.io/Course-creator/nonexistent-route)
+            if echo "$BODY" | grep -q "File not found"; then
+              echo "❌ Received GitHub Pages 404 page instead of app NotFound component"
+              echo "This indicates the deployment or routing is broken"
+              exit 1
+            else
+              echo "✅ Appears to be custom 404 handling"
+            fi
+          else
+            echo "❌ Unexpected response: $RESPONSE"
+            exit 1
+          fi
+          
+      - name: Verify no GitHub 404 on main routes
+        run: |
+          echo "🔥 Verifying routes don't return GitHub 404 page..."
+          
+          # Check homepage doesn't contain GitHub's 404 text
+          BODY=$(curl -s https://lovable-ldcs.github.io/Course-creator/)
+          if echo "$BODY" | grep -q "File not found"; then
+            echo "❌ CRITICAL: Homepage is showing GitHub's 404 page!"
+            echo "Deployment has FAILED. Common causes:"
+            echo "  - GitHub Pages not enabled in repository settings"
+            echo "  - Source not set to 'GitHub Actions' in Pages settings"
+            echo "  - Deployment workflow didn't complete successfully"
+            echo ""
+            echo "Body preview:"
+            echo "$BODY" | head -20
+            exit 1
+          else
+            echo "✅ Homepage is not showing GitHub 404 page"
+          fi
+          
+      - name: Deployment Smoke Test Summary
+        run: |
+          echo ""
+          echo "========================================="
+          echo "✅ ALL DEPLOYMENT SMOKE TESTS PASSED"
+          echo "========================================="
+          echo ""
+          echo "The following routes are accessible:"
+          echo "  ✅ / (Homepage)"
+          echo "  ✅ /engine1"
+          echo "  ✅ /engine2"
+          echo "  ✅ /system-health"
+          echo "  ✅ 404 handling works"
+          echo ""
+          echo "Deployment is healthy!"
+          echo ""
