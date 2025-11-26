@@ -1,4 +1,4 @@
-# AI Version – <MODULE NAME>
+# AI Version – Course-creator
 
 Current AI version: 1.0.0  
 Status: Active  
